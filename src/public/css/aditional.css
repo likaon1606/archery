@@ -1,8 +1,16 @@
+.navbar {
+  background-color: #294663 ;
+}
+
 .full {
-  color: goldenrod;
+  color: #c83a33 ;
   font-weight: bold;
   line-height: .1;
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+.arquery__subtitle {
+  color: #294663 ;
 }
 
 @media only screen and (max-width:321px){
