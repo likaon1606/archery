@@ -29,6 +29,21 @@ router.get('/list', async(req, res) => {
     }
 });
 
+router.get('/competition', async(req, res) => {
+    try {
+        const [result] = await pool.query('SELECT id, name, lastname, points FROM participants ORDER BY points DESC');
+
+        const participantsWithPlaces = result.map((participant, index) => ({
+            ...participant,
+            place: index + 1, 
+        }));
+
+        res.render('participants/competition', { participants: participantsWithPlaces });
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
+});
+
 router.get('/edit/:id', async(req, res) => {
     try {
         const {id} = req.params;

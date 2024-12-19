@@ -13,5 +13,8 @@ CREATE TABLE IF NOT EXISTS participants(
 
 SELECT * FROM participants;
 
-DROP TABLE participants;
+-- Sacar los 3 primeros lugares
+SELECT id, name, lastname, points
+FROM participants
+ORDER BY points DESC;
 
