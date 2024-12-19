@@ -13,3 +13,5 @@ CREATE TABLE IF NOT EXISTS participants(
 
 SELECT * FROM participants;
 
+DROP TABLE participants;
+

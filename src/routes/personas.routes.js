@@ -42,7 +42,7 @@ router.get('/edit/:id', async(req, res) => {
 
 router.post('/edit/:id', async(req, res) => {
     try {
-        const {name, round, points} = req.body;
+        const {name, lastname, round, points} = req.body;
         const {id} = req.params;
         const editPersona = {name, lastname, round, points};
         await pool.query('UPDATE participants SET ? WHERE id = ?', [editPersona, id]);
