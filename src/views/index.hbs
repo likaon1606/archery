@@ -1,19 +1,56 @@
-<main class="mt-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <img class="card-img-top mx-auto my-1" src="/img/logo.png" alt="logo" style="width: 230px; height: auto; display: block;">
-                        <h2 class="full">Contador de puntos</h2>
-                        <h3 class="p-4  arquery__subtitle"> - ARQUERÍA -</h3>
-                    </div>
-                    <div class="card-body text-center">
-                        <p>Para crear un participante puedes usar el botón "Crear Nuevo Participante" o puedes dar click en el menú, opción Crear Nuevo Participante</p>
-                        <a href="/add" class="btn btn-primary">Crear Nuevo Participante</a>
-                    </div>
-                </div>
+<main class='mt-5'>
+  <div class='container'>
+    <div class='row justify-content-center'>
+      <div class='col-12 col-md-8 col-lg-6'>
+        
+        <div class='card'>
+
+          <div class='card-header text-center'>
+            <img
+              class='card-img-top mx-auto my-1'
+              src='/img/logo.png'
+              alt='logo'
+              style='width: 230px; height: auto; display: block;'
+            />
+            <h2 class='full'>Contador de puntos</h2>
+            <h3 class='p-4 arquery__subtitle'> - ARQUERÍA -</h3>
+          </div>
+          <div class='card-body text-center'>
+            <p>Para crear un participante puedes usar el botón "Crear Nuevo
+              Participante" o puedes dar click en el menú, opción Crear Nuevo
+              Participante</p>
+            <a href='/add' class='btn btn-primary'>Crear Nuevo Participante</a>
+          </div>
+
+          <form id='loginForm'>
+            <div class='mb-3'>
+              <label for='name' class='form-label'>Nombre de usuario</label>
+              <input
+                type='text'
+                class='form-control'
+                id='name'
+                name='name'
+                required
+              />
             </div>
+            <div class='mb-3'>
+              <label for='password' class='form-label'>Contraseña</label>
+              <input
+                type='password'
+                class='form-control'
+                id='password'
+                name='password'
+                required
+              />
+            </div>
+            <button type='submit' class='btn btn-primary'>Iniciar sesión</button>
+          </form>
+
         </div>
+        
+      </div>
     </div>
+  </div>
 </main>
+
+<script src="/js/login.js"></script>
