@@ -1,13 +1,14 @@
 import { Router } from "express";
 import pool from '../database.js';
+import { verifyToken, isAdmin } from "../auth/auth.js";
 
 const router = Router();
 
-router.get('/add', (req, res) => {
+router.get('/add', verifyToken, (req, res) => {
     res.render('participants/add');
 });
 
-router.post('/add', async(req, res) => {
+router.post('/add', verifyToken, async(req, res) => {
     try {
         const {name, lastname, round, points} = req.body;
         const newPersona = {
