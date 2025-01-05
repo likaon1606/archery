@@ -4,11 +4,11 @@ import { verifyToken, isAdmin } from "../auth/auth.js";
 
 const router = Router();
 
-router.get('/add', verifyToken, (req, res) => {
+router.get('/add',  (req, res) => {
     res.render('participants/add');
 });
 
-router.post('/add', verifyToken, async(req, res) => {
+router.post('/add', async(req, res) => {
     try {
         const {name, lastname, round, points} = req.body;
         const newPersona = {
@@ -21,7 +21,8 @@ router.post('/add', verifyToken, async(req, res) => {
     }
 });
 
-router.get('/list', async(req, res) => {
+
+router.get('/list',  verifyToken, isAdmin, async(req, res) => {
     try {
         const [result] = await pool.query('SELECT * FROM participants');
         res.render('participants/list', {participants: result});

@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.use(personasRoutes);
 app.use(login);
+app.use(personasRoutes);
 
 //Public files
 app.use(express.static(join(__dirname, 'public')))
