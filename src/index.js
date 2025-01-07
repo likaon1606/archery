@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import personasRoutes from './routes/personas.routes.js'
-import login from './routes/login.routes.js'
 
 //Inicialization
 const app = express();
@@ -31,7 +30,6 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.use(login);
 app.use(personasRoutes);
 
 //Public files

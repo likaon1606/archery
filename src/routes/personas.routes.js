@@ -1,6 +1,5 @@
 import { Router } from "express";
 import pool from '../database.js';
-import { verifyToken, isAdmin } from "../auth/auth.js";
 
 const router = Router();
 
@@ -22,7 +21,7 @@ router.post('/add', async(req, res) => {
 });
 
 
-router.get('/list',  verifyToken, isAdmin, async(req, res) => {
+router.get('/list', async(req, res) => {
     try {
         const [result] = await pool.query('SELECT * FROM participants');
         res.render('participants/list', {participants: result});
