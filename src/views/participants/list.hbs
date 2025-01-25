@@ -2,24 +2,41 @@
     <div class="row mt-5">
         <h3 class="text-center text-uppercase p-2">Participantes</h3>
         {{#if participants}}
-
         <table class="table text-center">
             <thead>
-                <tr class="table-dark prueba">
+                <tr class="table-dark">
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
-                    <th scope="col">Ronda</th>
                     <th scope="col">Puntos</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Subcategoría</th>
+                    <th scope="col">Series y Flechas</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each participants}}
-                <tr class="prueba">
+                <tr>
                     <td>{{name}}</td>
                     <td>{{lastname}}</td>
-                    <td>{{round}}</td>
                     <td>{{points}}</td>
+                    <td>{{category}}</td>
+                    <td>{{subcategory}}</td>
+                    <td>
+                        <!-- Mostrar las series y flechas -->
+                        {{#each series}}
+                        <div>
+                            <strong>Serie {{series_number}}</strong>
+                            <ul>
+                                {{#each arrows}}
+                                <li>
+                                    Flecha {{arrow_number}}: {{points}} puntos
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        {{/each}}
+                    </td>
                     <td>
                         <div class="btn-group">
                             <a href="/edit/{{id}}" class="btn btn-warning p-2 btn-mod"><i class="fa-solid fa-pencil"></i></a>
@@ -31,21 +48,20 @@
             </tbody>
             <tfoot>
                 <tr class="table-primary fw-bold fs-4">
-                    <td colspan="5">Registro de Participantes</td>
+                    <td colspan="12">Registro de Participantes</td>
                 </tr>
             </tfoot>
         </table>
-    </div>
-    {{else}}
-    <div class="card text-center mx-auto" style="width:350px">
-        <div class="card-header">
-            <h3>Debes Crear un Participante</h3>
+        {{else}}
+        <div class="card text-center mx-auto" style="width:350px">
+            <div class="card-header">
+                <h3>Debes Crear un Participante</h3>
+            </div>
+            <div class="card-body">
+                <p>Presiona este botón para registrar un nuevo participante</p>
+                <a href="/add" class="btn btn-primary">Ir a crear</a>
+            </div>
         </div>
-        <div class="card-body">
-            <p>Presiona este botón para registrar un nuevo participante</p>
-            <a href="/add" class="btn btn-primary">Ir a crear</a>
-        </div>
-
         {{/if}}
     </div>
 </div>

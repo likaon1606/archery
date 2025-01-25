@@ -1,0 +1,119 @@
+<form method="POST" id="seriesForm">
+  <h2>Agregar Series y Flechas</h2>
+
+  <!-- Selección del participante -->
+  <label for="participant_id">Participante</label>
+  <select name="participant_id" id="participant_id" required>
+    {{#each participants}}
+      <option value="{{this.id}}">{{this.name}} {{this.lastname}}</option>
+    {{/each}}
+  </select>
+
+  <!-- Contenedor de series -->
+  <div id="series-container">
+    <div class="series" id="series-1">
+      <h3>Serie 1</h3>
+      <div class="arrows">
+        <label for="arrow-1-1">Flecha 1:</label>
+        <input type="number" name="series[0][arrows][0][points]" id="arrow-1-1" required>
+      </div>
+      <button type="button" onclick="addArrow(1)">Agregar Flecha</button>
+      <button type="button" onclick="removeSeries(1)">Eliminar Serie</button>
+    </div>
+  </div>
+
+  <!-- Botones para agregar más series o enviar el formulario -->
+  <button type="button" onclick="addSeries()">Agregar Serie</button>
+  <button type="submit">Guardar Series</button>
+</form>
+
+<script>
+  // Función para agregar una nueva serie
+  function addSeries() {
+    const seriesContainer = document.getElementById('series-container');
+    const seriesCount = document.querySelectorAll('.series').length + 1;
+
+    const newSeries = document.createElement('div');
+    newSeries.classList.add('series');
+    newSeries.id = `series-${seriesCount}`;
+    newSeries.innerHTML = `
+      <h3>Serie ${seriesCount}</h3>
+      <div class="arrows">
+        <label for="arrow-${seriesCount}-1">Flecha 1:</label>
+        <input type="number" name="series[${seriesCount - 1}][arrows][0][points]" id="arrow-${seriesCount}-1" required>
+      </div>
+      <button type="button" onclick="addArrow(${seriesCount})">Agregar Flecha</button>
+      <button type="button" onclick="removeSeries(${seriesCount})">Eliminar Serie</button>
+    `;
+    seriesContainer.appendChild(newSeries);
+  }
+
+  // Función para agregar una nueva flecha en una serie
+  function addArrow(seriesNumber) {
+    const seriesElement = document.getElementById(`series-${seriesNumber}`);
+    const arrowCount = seriesElement.querySelectorAll('.arrows input').length + 1;
+
+    const newArrow = document.createElement('div');
+    newArrow.classList.add('arrow');
+    newArrow.innerHTML = `
+      <label for="arrow-${seriesNumber}-${arrowCount}">Flecha ${arrowCount}:</label>
+      <input type="number" name="series[${seriesNumber - 1}][arrows][${arrowCount - 1}][points]" id="arrow-${seriesNumber}-${arrowCount}" required>
+    `;
+    seriesElement.querySelector('.arrows').appendChild(newArrow);
+  }
+
+  // Función para eliminar una serie
+  function removeSeries(seriesNumber) {
+    const seriesElement = document.getElementById(`series-${seriesNumber}`);
+    if (seriesElement) seriesElement.remove();
+  }
+
+  // Función para capturar dinámicamente los datos del formulario
+function getSeriesData() {
+  const seriesElements = document.querySelectorAll('.series');
+  const series = [];
+
+  seriesElements.forEach((seriesElement, index) => {
+    // Obtener todas las flechas dentro de esta serie
+    const arrows = Array.from(seriesElement.querySelectorAll('.arrows input')).map((input, arrowIndex) => ({
+      arrow_number: arrowIndex + 1,
+      points: parseInt(input.value, 10),
+    }));
+
+    series.push({
+      series_number: index + 1, // Número de la serie basado en el orden
+      arrows, // Todas las flechas capturadas correctamente
+    });
+  });
+
+  return series;
+}
+
+
+  // Manejo del envío del formulario
+  document.querySelector('#seriesForm').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevenir el envío normal del formulario
+
+    // Obtener el ID del participante seleccionado
+    const participantId = document.querySelector('#participant_id').value;
+
+    // Obtener dinámicamente los datos de las series y flechas
+    const seriesData = getSeriesData();
+
+    // Enviar los datos al backend
+    const response = await fetch(`/series/${participantId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ series: seriesData }),
+    });
+
+    // Manejo de la respuesta del backend
+    if (!response.ok) {
+      const error = await response.json();
+      alert(`Error: ${error.error}`);
+    } else {
+      alert('Series y flechas guardadas con éxito.');
+      window.location.reload(); // Recargar la página para limpiar el formulario
+    }
+  });
+</script>

@@ -12,18 +12,25 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 //Settings
 app.set('port', process.env.PORT || 3000);
 app.set('views', join(__dirname, 'views'));
+
+//handlebars
 app.engine('.hbs',engine({
     defaultLayout: 'main',
     layoutsDir: join(app.get('views'), 'layouts'),
     partialsDir: join(app.get('views'), 'partials'),
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        eq: ((a, b) => {
+            return a === b;
+        })
+    }
 }));
 app.set('view engine', '.hbs');
 
 //Middlewares
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 //Routes
 app.get('/', (req, res) => {
